@@ -6,68 +6,155 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Patient information leaflets: oral and maxillofacial surgery (drafts)</title>
 <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
-<style>:root{--ink:#212b32;--soft:#4c6272;--brand:#005eb8;--brand-light:#f0f4f5;--warn:#8a2a12;--warn-light:#fbe9e3;--amber-light:#fdf3dc;--line:#d5dfe2;--size:19px}
+<style>:root{--ink:#2b2620;--soft:#5d554a;--brand:#00468b;--bg:#efe6cf;--paper:#fbf6e6;--panel:#f3ead1;--line:#ddd0ae;--urgent:#da291c;--urgent-bg:#fff;--mark:#fff1a8;--mark-line:#e0b92c;--term:#efe2bf;--size:19px;--lh:1.55;--ls:normal;--ws:normal}
+html[data-theme="dark"]{--ink:#eef2f5;--soft:#b7c4cc;--brand:#7cc0ff;--bg:#0f1418;--paper:#182027;--panel:#202a33;--line:#33414c;--urgent:#ff8a80;--urgent-bg:#2a1615;--mark:#3d3713;--mark-line:#c9a92c;--term:#24384c}
+html[data-theme="contrast"]{--ink:#ffff00;--soft:#ffff00;--brand:#ffff00;--bg:#000;--paper:#000;--panel:#000;--line:#ffff00;--urgent:#ffff00;--urgent-bg:#000;--mark:#333;--mark-line:#fff;--term:#000}
 *{box-sizing:border-box}
 html{font-size:var(--size)}
-body{margin:0;background:#f4f7f8;color:var(--ink);font-family:"Atkinson Hyperlegible",Arial,sans-serif;line-height:1.55}
-.draft{background:#f0f4f5;color:#4c6272;font-size:.75rem;text-align:center;padding:6px 14px}
-header{background:#fff;color:var(--ink);padding:22px 20px 18px;max-width:680px;margin:0 auto;border-bottom:3px solid var(--brand)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Atkinson Hyperlegible",Arial,sans-serif;line-height:var(--lh);letter-spacing:var(--ls);word-spacing:var(--ws)}
+a{color:var(--brand);text-decoration:underline;text-underline-offset:.15em}
+:focus-visible{outline:3px solid #ffbf47;outline-offset:2px;box-shadow:0 0 0 6px #212b32}
+.skip{position:absolute;left:-999px;top:0;background:#ffbf47;color:#212b32;padding:10px 14px;z-index:20;font-weight:700}
+.skip:focus{left:8px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.draft{background:var(--panel);color:var(--soft);font-size:.75rem;text-align:center;padding:6px 14px}
+header{background:var(--paper);padding:22px 20px 16px;max-width:680px;margin:0 auto;border-bottom:3px solid var(--brand)}
 header .dept{font-size:.8rem;color:var(--soft);margin:0 0 6px}
-header h1{margin:0;font-size:2rem;line-height:1.15;color:var(--brand)}
+header h1{margin:0;font-size:min(2rem,11vw);overflow-wrap:break-word;hyphens:auto;line-height:1.15;color:var(--brand)}
 header p.sub{margin:6px 0 0;font-size:1.1rem}
-.tools{position:sticky;top:0;z-index:5;background:#fff;border-bottom:1px solid var(--line);display:flex;gap:8px;padding:10px 14px;flex-wrap:wrap;align-items:center}
-.tools button{font:inherit;font-size:.85rem;font-weight:700;border:2px solid var(--brand);background:#fff;color:var(--brand);border-radius:999px;padding:8px 16px;min-height:44px;cursor:pointer}
-.tools button[aria-pressed="true"]{background:var(--brand);color:#fff}
-.tools .hint{font-size:.72rem;color:var(--soft);flex-basis:100%}
-main{max-width:680px;margin:0 auto;padding:8px 18px 40px;background:#fff}
-section{padding:18px 0 8px;border-bottom:1px solid var(--line)}
-h2{font-size:1.35rem;color:var(--brand);margin:0 0 10px;line-height:1.25}
+header p.time{margin:10px 0 0;font-size:.8rem;color:var(--soft)}
+.tools{position:sticky;top:0;z-index:10;background:var(--paper);border-bottom:1px solid var(--line);display:grid;grid-template-columns:repeat(4,1fr);gap:4px;padding:6px 6px;max-width:680px;margin:0 auto;box-shadow:0 2px 6px rgba(0,0,0,.06)}
+.tools button{font:inherit;font-size:min(.68rem,14px);font-weight:700;letter-spacing:normal;word-spacing:normal;line-height:1.15;border:2px solid transparent;background:transparent;color:var(--brand);border-radius:10px;padding:6px 2px;min-height:56px;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;text-decoration:none;text-align:center}
+.tools svg{width:24px;height:24px}
+.tools [aria-pressed="true"],.tools [aria-expanded="true"]{background:var(--brand);color:var(--paper)}
+.player{position:sticky;top:72px;z-index:9;max-width:680px;margin:0 auto;background:var(--panel);border-bottom:1px solid var(--line);display:flex;flex-wrap:wrap;gap:6px;padding:8px 10px;align-items:center}
+.player[hidden],.panel[hidden]{display:none}
+.player button,.panel button{font:inherit;font-size:.85rem;font-weight:700;border:2px solid var(--brand);background:var(--paper);color:var(--brand);border-radius:999px;padding:6px 14px;min-height:44px;min-width:44px;cursor:pointer}
+.player .tip{flex-basis:100%;margin:2px 0 0;font-size:.72rem;color:var(--soft)}
+.panel{max-width:680px;margin:0 auto;background:var(--panel);border-bottom:2px solid var(--brand);padding:12px 18px 16px}
+.panel .ph{font-size:.9rem;color:var(--ink);margin:10px 0 6px}
+.panel .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.panel .note{font-size:.8rem;color:var(--soft);margin:8px 0}
+.panel .toggle{display:flex;gap:10px;align-items:flex-start;font-size:.9rem;margin:8px 0;cursor:pointer}
+.panel .toggle input{width:24px;height:24px;flex:none;margin-top:2px;accent-color:var(--brand)}
+.panel .reset{margin-top:8px;border-style:dashed}
+.sw{min-width:118px}
+.sw-auto{background:var(--paper) !important;color:var(--brand) !important;border-color:var(--brand) !important}
+.sw-light{background:#fbf6e6 !important;color:#00468b !important;border-color:#00468b !important}
+.sw-dark{background:#182027 !important;color:#7cc0ff !important;border-color:#7cc0ff !important}
+.sw-contrast{background:#000 !important;color:#ff0 !important;border-color:#ff0 !important}
+.sw[aria-pressed="true"]{outline:3px solid var(--ink);outline-offset:2px}
+.sw[aria-pressed="true"]::before{content:"\2713  "}
+.langs{list-style:none;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:6px}
+.langs .lang{display:block;width:100%;text-align:left;font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--paper);color:var(--brand);cursor:pointer;min-height:44px}
+.langs .native{font-weight:700;display:block}
+.langs .en{font-size:.75rem;color:var(--soft)}
+.toc{margin:0;padding-left:1.3em}.toc li{margin-bottom:8px}
+main{max-width:680px;margin:0 auto;padding:8px 18px 40px;background:var(--paper)}
+main:focus{outline:none}
+section{padding:18px 0 8px;border-bottom:1px solid var(--line);scroll-margin-top:84px}
+h2{overflow-wrap:break-word;hyphens:auto;font-size:1.35rem;color:var(--brand);margin:0 0 10px;line-height:1.25}
 h3{font-size:1.05rem;margin:0 0 6px}
 p{margin:0 0 12px}
 ul,ol{margin:0 0 12px;padding-left:1.3em}
 li{margin-bottom:6px}
 .intro{font-size:1.05rem}
-.diagram{display:block;width:100%;height:auto;margin:4px 0 14px}
+.summary{background:var(--panel);border:2px solid var(--brand);border-radius:12px;padding:14px 16px 6px;margin:14px 0 4px}
+.summary h2{font-size:1.15rem}
+.diagram{display:block;width:100%;height:auto;margin:4px 0 14px;border-radius:10px;background:#fff}
 ol.steps{counter-reset:s;list-style:none;padding-left:0}
 ol.steps li{counter-increment:s;position:relative;padding-left:2.4em;margin-bottom:10px}
 ol.steps li::before{content:counter(s) ".";position:absolute;left:.4em;top:0;font-weight:700}
-
 .risk-intro,.risk-outro{font-size:.95rem;color:var(--soft)}
 .band{font-size:.9rem;font-weight:700;font-style:italic;color:var(--soft);margin:16px 0 4px}
 .risk{display:grid;grid-template-columns:1fr auto;gap:2px 14px;align-items:start;padding:8px 2px;border-bottom:1px solid var(--line)}
 .risk .n{font-weight:700;text-align:right;white-space:nowrap}
+@media (max-width:420px){.risk{grid-template-columns:minmax(0,1fr) auto}.risk .n{white-space:normal;max-width:7em;overflow-wrap:anywhere}}
+html[style*="--size: 2"] .risk{grid-template-columns:1fr}html[style*="--size: 2"] .risk .n{text-align:left;max-width:none}
 .risk small{grid-column:1/-1;color:var(--soft);font-size:.85rem}
-.help{border-radius:12px;padding:14px 16px;margin-bottom:12px}
 .help{padding:0;margin-bottom:14px}
-.help.urgent{border:3px solid #da291c;padding:12px 14px;border-radius:4px}
-.help.urgent h3{color:#da291c}
-
+.help.call{background:var(--panel);border-radius:8px;padding:12px 14px}
+.help.urgent{border:4px double var(--urgent);background:var(--urgent-bg);padding:12px 14px;border-radius:4px}
+.help.urgent h3{color:var(--urgent)}
+.help .badge{display:inline-flex;align-items:center;justify-content:center;width:1.4em;height:1.4em;border-radius:50%;background:var(--brand);color:var(--paper);font-size:.85em;margin-right:8px;vertical-align:-.15em}
+.help.urgent .badge{background:var(--urgent)}
 .help ul{margin-bottom:0}
+.term{font:inherit;letter-spacing:inherit;word-spacing:inherit;color:inherit;background:var(--term);border:0;border-bottom:2px dotted var(--brand);padding:0 2px;cursor:help;border-radius:3px}
+.term[aria-expanded="true"]{background:var(--brand);color:var(--paper)}
+.def{display:block;list-style:none;margin:6px 0 8px;padding:8px 12px;border-left:4px solid var(--brand);background:var(--panel);font-size:.92rem;border-radius:0 6px 6px 0}
+.questions textarea{width:100%;font:inherit;font-size:1rem;color:var(--ink);background:var(--paper);border:2px solid var(--soft);border-radius:8px;padding:10px;line-height:1.5}
+.saved{font-size:.78rem;color:var(--soft);min-height:1.2em}
+.actions{display:flex;flex-wrap:wrap;gap:10px;padding:18px 0 4px}
+.actions button{font:inherit;font-size:.9rem;font-weight:700;border:2px solid var(--brand);background:var(--paper);color:var(--brand);border-radius:999px;padding:10px 18px;min-height:48px;cursor:pointer}
+.actions .saved{flex-basis:100%}
 .contact{margin-bottom:12px}
-.contact p{margin:0}
 .meta{font-size:.72rem;color:var(--soft);padding-top:18px}
 .meta p{margin-bottom:6px}
-.speaking{background:#fff4c2;outline:3px solid #f0d36b;border-radius:6px}
+.speaking{background:var(--mark);outline:3px solid var(--mark-line);border-radius:6px}
+html[data-theme="contrast"] .diagram{outline:2px solid #ff0}
 @media (max-width:420px){header h1{font-size:1.7rem}}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto !important;transition:none !important}}
+@media print{
+  .tools,.player,.panel,.skip,.draft,.actions,header .time,.seepic,.riskpic{display:none !important}
+  html,body,main,header{background:#fff !important;color:#000 !important}
+  html{font-size:12pt}
+  main > section{display:block !important;break-inside:avoid-page}
+  .term{background:none;border:0;padding:0}
+  .def{display:none}
+  .questions textarea{border:1px solid #000;min-height:8em}
+  a{color:#000}
+  .meta::after{content:"Online version: " attr(data-url)}
+}
 
-ul.list{list-style:none;padding:0;margin:8px 0 0}
-ul.list li{margin:0 0 12px}
-ul.list a{display:block;padding:14px 16px;border:1px solid var(--line);border-radius:6px;text-decoration:none;color:var(--ink);background:#fff}
-ul.list a:hover{border-color:var(--brand)}
-ul.list .t{display:block;font-weight:700;color:var(--brand);font-size:1.1rem}
-ul.list .s{display:block;font-size:.9rem;color:var(--soft)}
-</style>
+.alt{margin:10px 0 0;font-size:.9rem}
+.alt a{font-weight:700}
+.erbadge{display:inline-block;background:var(--brand);color:var(--paper);font-weight:700;padding:4px 12px;border-radius:6px;margin:14px 0 0}
+html[data-easy="on"] main{font-size:1.18rem}
+html[data-easy="on"] main p{margin-bottom:8px}
+.er{display:grid;grid-template-columns:minmax(56px,96px) minmax(0,1fr);gap:14px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line)}
+.er:last-child{border-bottom:0}
+.erpic{width:100%;height:auto;max-width:96px;background:#fff;border-radius:12px;padding:4px}
+.ert ul{margin:0;padding-left:1.2em}
+html[data-theme="dark"] html[data-theme="dark"] .seepic{grid-column:1/-1;justify-self:start;font:inherit;font-size:.8rem;font-weight:700;border:0;background:none;color:var(--brand);text-decoration:underline;padding:6px 0;cursor:pointer;min-height:36px}
+.riskpic{grid-column:1/-1;background:var(--panel);border-radius:10px;padding:10px 12px;margin-top:4px}
+.riskpic[hidden]{display:none}
+.iconarray{width:100%;max-width:300px;display:block;margin:0 auto 8px}
+.p-yes{fill:var(--brand)}
+.p-maybe{fill:var(--paper);stroke:var(--brand);stroke-width:.7}
+.p-no{fill:#c9d3d9}
+html[data-theme="contrast"] .p-no{fill:#555}
+.rw{font-size:.9rem;font-weight:700;margin-bottom:4px}
+.key{font-size:.78rem;color:var(--soft);display:flex;flex-wrap:wrap;gap:4px 14px;margin:0}
+.key .k{display:inline-block;width:12px;height:12px;border-radius:50%;vertical-align:-1px;margin-right:4px}
+.key .k.p-yes{background:var(--brand)}.key .k.p-maybe{background:var(--paper);border:1.5px solid var(--brand)}.key .k.p-no{background:#c9d3d9}
+
+/* Google translation: hide its banner and tooltip, keep our layout */
+.skiptranslate iframe,.goog-te-banner-frame,#goog-gt-tt,.goog-te-balloon-frame,.VIpgJd-ZVi9od-ORHb-OEVmcd,.VIpgJd-ZVi9od-aZ2wEe-wOHMyf{display:none !important}
+body{top:0 !important;position:static !important}
+font{background:none !important;box-shadow:none !important}
+html.translated-rtl header,html.translated-rtl main,html.translated-rtl .panel{direction:rtl;text-align:right}
+html.translated-rtl .risk .n{text-align:left}
+html.translated-rtl ol.steps li{padding-left:0;padding-right:2.4em}
+html.translated-rtl ol.steps li::before{left:auto;right:.4em}
+#gtel{display:none}
+.player .tip{min-height:0}
+main p,main li{overflow-wrap:break-word}
+.ert p,.ert li{overflow-wrap:anywhere}
+
+ul.list{list-style:none;padding:0;margin:8px 0 0}ul.list li{margin:0 0 12px}
+ul.list a{display:block;padding:14px 16px;border:1px solid var(--line);border-radius:8px;text-decoration:none;color:var(--ink);background:var(--paper)}
+ul.list .t{display:block;font-weight:700;color:var(--brand);font-size:1.1rem}ul.list .s{display:block;color:var(--soft);font-size:.9rem}</style>
 </head>
 <body>
-<div class="draft">Drafts for departmental review. Not for patient use.</div>
+<aside class="draft" aria-label="Draft notice">Drafts for departmental review. Not for patient use.</aside>
 <header>
   <p class="dept">Oral and maxillofacial surgery</p>
   <h1>Patient information leaflets</h1>
   <p class="sub">Online versions of our leaflets. Each one can be read aloud and made bigger.</p>
 </header>
 <main>
-  <section style="border:0"><ul class="list"><li><a href="coronectomy"><span class="t">Coronectomy</span><span class="s">Taking out part of a lower wisdom tooth</span></a></li><li><a href="biopsy"><span class="t">Mouth biopsy</span><span class="s">Taking a small sample from your mouth</span></a></li><li><a href="canine"><span class="t">Uncovering a buried canine tooth</span><span class="s">Surgery to help your brace bring an eye tooth into place</span></a></li><li><a href="extraction"><span class="t">Having a tooth taken out</span><span class="s">What to expect before, during and after a tooth extraction</span></a></li><li><a href="wisdom"><span class="t">Having a wisdom tooth taken out</span><span class="s">Removal of a lower wisdom tooth</span></a></li><li><a href="apicectomy"><span class="t">Apicectomy</span><span class="s">Surgery to treat infection at the tip of a tooth root</span></a></li><li><a href="oac"><span class="t">A hole between your mouth and sinus</span><span class="s">Oro-antral communication: what it is and how we close it</span></a></li><li><a href="oaf"><span class="t">Closing a hole between your mouth and sinus that has not healed</span><span class="s">Repair of an oro-antral fistula</span></a></li><li><a href="root"><span class="t">Removing a tooth root from the sinus</span><span class="s">When part of an upper tooth has moved into the sinus</span></a></li><li><a href="easy-extraction"><span class="t">Having a tooth taken out (Easy Read)</span><span class="s">With pictures and short sentences</span></a></li></ul></section>
+  <section style="border:0"><ul class="list"><li><a href="coronectomy"><span class="t">Coronectomy</span><span class="s">Taking out part of a lower wisdom tooth</span></a></li><li><a href="biopsy"><span class="t">Mouth biopsy</span><span class="s">Taking a small sample from your mouth</span></a></li><li><a href="canine"><span class="t">Uncovering a buried canine</span><span class="s">Surgery to help your brace bring an eye tooth into place</span></a></li><li><a href="extraction"><span class="t">Having a tooth taken out</span><span class="s">What to expect before, during and after a tooth extraction</span></a></li><li><a href="wisdom"><span class="t">Having a wisdom tooth taken out</span><span class="s">Removal of a lower wisdom tooth</span></a></li><li><a href="apicectomy"><span class="t">Apicectomy</span><span class="s">Surgery to treat infection at the tip of a tooth root</span></a></li><li><a href="oac"><span class="t">A hole between the mouth and the sinus</span><span class="s">Oro-antral communication: what it is and how we close it</span></a></li><li><a href="oaf"><span class="t">Closing a hole between your mouth and sinus that has not healed</span><span class="s">Repair of an oro-antral fistula</span></a></li><li><a href="root"><span class="t">Removing a tooth root from the sinus</span><span class="s">When part of an upper tooth has moved into the sinus</span></a></li><li><a href="easy-extraction"><span class="t">Having a tooth taken out (Easy Read)</span><span class="s">With pictures and short sentences</span></a></li></ul></section>
   <div class="meta"><p>These leaflets are drafts. They need consultant sign-off and trust approval before they are given to patients.</p></div>
 </main>
-</body>
+<script>(function(){var r=document.documentElement,c='auto';try{c=localStorage.getItem('leaflet-theme2')||'auto'}catch(e){}var s=parseInt((function(){try{return localStorage.getItem('leaflet-size')}catch(e){return null}})(),10);if(s>=15&&s<=30)r.style.setProperty('--size',s+'px');if(c==='auto'){c=matchMedia('(prefers-contrast: more)').matches?'contrast':(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light')}r.setAttribute('data-theme',c)})();</script></body>
 </html>
